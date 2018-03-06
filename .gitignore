@@ -1,0 +1,14 @@
+/.vs/Math/v15/*.suo
+/.vs/Math/v15/*.db
+/.vs/Math/v15/*.opendb
+/.vs/Math/v15/ipch/*.ipch
+/Debug/*.exe
+/Debug/*.ilk
+/Debug/*.pdb
+/Math/Debug/*.log
+/Math/Debug/*.obj
+/Math/Debug/*.pch
+/Math/Debug/Math.tlog/*.tlog
+/Math/Debug/Math.tlog/*.lastbuildstate
+/Math/Debug/*.idb
+/Math/Debug/*.pdb
