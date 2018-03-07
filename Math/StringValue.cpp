@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "StringValue.h"
 #include <assert.h>
+#include <algorithm>
 
 StringValue::StringValue()
     : m_value("0")
@@ -77,6 +78,17 @@ StringValue StringValue::operator*(const StringValue& other)
 StringValue & StringValue::operator*=(const StringValue & other)
 {
     *this = *this * other;
+    return *this;
+}
+
+StringValue StringValue::operator/(const StringValue& other)
+{
+    return Divide(other);
+}
+
+StringValue& StringValue::operator/=(const StringValue& other)
+{
+    *this = *this / other;
     return *this;
 }
 
@@ -256,10 +268,54 @@ StringValue StringValue::Multiply(const StringValue& other)
     return result;
 }
 
-StringValue StringValue::Divide(const StringValue& other)
+StringValue StringValue::Divide(const StringValue& divisor)
 {
+    StringValue& dividend = *this;
 
-    return StringValue();
+    int divisorLength = divisor.GetSize();
+
+    int dividendLength = dividend.GetSize();
+    std::string tempDividendString = "";
+    std::string quotient = "";
+    for (int i = dividendLength - 1; i >= 0; i--)
+    {
+        int digit = GetDigit(i);
+        tempDividendString += '0' + digit;
+
+        // get the quotient value
+        if (static_cast<int>(tempDividendString.length()) >= divisorLength)
+        {
+            StringValue tempDividend(tempDividendString);
+            StringValue tempDivisor(divisor);
+
+            int newDigit = 0;
+            if (tempDividend > divisor)
+            {
+                newDigit = 1;
+                while (tempDividend > (tempDivisor + divisor))
+                {
+                    tempDivisor += divisor;
+                    newDigit++;
+                }
+            }
+            tempDivisor = divisor;
+            StringValue multiplier(std::to_string(newDigit));
+            tempDividend = tempDividend - (tempDivisor * multiplier);
+
+            tempDividendString = tempDividend.GetValue();
+
+            quotient += '0' + newDigit;
+        }
+        else
+        {
+            quotient += '0';
+        }
+
+    }
+
+    quotient.erase(0, std::min(quotient.find_first_not_of('0'), quotient.size() - 1));
+
+    return StringValue(quotient);
 }
 
 int StringValue::GetDigit(unsigned int index) const

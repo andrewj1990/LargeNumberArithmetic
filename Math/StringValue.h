@@ -24,6 +24,8 @@ public:
     StringValue& operator-=(const StringValue& other);
     StringValue operator*(const StringValue& other);
     StringValue& operator*=(const StringValue& other);
+    StringValue operator/(const StringValue& other);
+    StringValue& operator/=(const StringValue& other);
     bool operator<(const StringValue& other);
     bool operator>(const StringValue& other);
     bool operator<=(const StringValue& other);
@@ -45,7 +47,7 @@ private:
     StringValue Add(const StringValue& other);
     StringValue Subtract(const StringValue& other);
     StringValue Multiply(const StringValue& other);
-    StringValue Divide(const StringValue& other);
+    StringValue Divide(const StringValue& divisor);
 
     void SetValue(const std::string& value);
     int Max(int value1, int value2);
